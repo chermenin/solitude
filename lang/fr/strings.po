@@ -244,6 +244,22 @@ msgstr "partager."
 msgid "save."
 msgstr "sauvegarder."
 
+#: ../../script/engine.js:168
+msgid "load."
+msgstr "charger."
+
+#: ../../script/engine.js:168
+msgid "exit."
+msgstr "quitter."
+
+#: ../../script/engine.js:168
+msgid "Exit?"
+msgstr "Quitter?"
+
+#: ../../script/engine.js:168
+msgid "exit the game?"
+msgstr "quitter le jeu?"
+
 #: ../../script/engine.js:177
 msgid "dropbox."
 msgstr "dropbox."
@@ -2686,8 +2702,8 @@ msgid "the compass points "
 msgstr "la boussole montre :"
 
 #: ../../script/path.js:102
-msgid "perks:"
-msgstr "avantages:"
+msgid "perks"
+msgstr "avantages"
 
 #: ../../script/path.js:132
 msgid "none"
@@ -2716,6 +2732,22 @@ msgstr "poids"
 #: ../../script/path.js:271
 msgid "available"
 msgstr "disponible"
+
+#: ../../script/path.js:160
+msgid "restores {0} hp"
+msgstr "restaure {0} hp"
+
+#: ../../script/path.js:161
+msgid "use with rifle"
+msgstr "utiliser avec un fusil"
+
+#: ../../script/path.js:165
+msgid "use with laser rifle"
+msgstr "utiliser avec un fusil laser"
+
+#: ../../script/path.js:165
+msgid "damage"
+msgstr "dommage"
 
 #: ../../script/room.js:16
 msgid "trap"

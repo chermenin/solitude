@@ -1,7 +1,6 @@
 (function() {
 	var Engine = window.Engine = {
 
-		SITE_URL: encodeURIComponent("http://adarkroom.doublespeakgames.com"),
 		VERSION: 1.3,
 		MAX_STORE: 99999999999999,
 		SAVE_DISPLAY: 30 * 1000,
@@ -75,7 +74,7 @@
 			debug: false,
 			log: false,
 			dropbox: false,
-			doubleTime: false
+			doubleTime: true
 		},
 
 		init: function(options) {
@@ -123,56 +122,39 @@
 				});
 			}
 
+			if (process.platform === "linux") {
+				$('<span>')
+					.addClass('menuBtn')
+					.text(_('donate.'))
+					.click(function() {
+						const shell = require('electron').shell;
+						shell.openExternal('https://www.paypal.me/chermenin');
+					})
+					.appendTo(menu);
+			}
+
 			$('<span>')
-				.addClass('appStore menuBtn')
-				.text(_('get the app.'))
-				.click(Engine.getApp)
+				.addClass('menuBtn')
+				.text(_('exit.'))
+				.click(Engine.confirmExit)
 				.appendTo(menu);
 
 			$('<span>')
-				.addClass('lightsOff menuBtn')
-				.text(_('lights off.'))
-				.click(Engine.turnLightsOff)
+				.addClass('menuBtn')
+				.text(_('load.'))
+				.click(Engine.loadFromFile)
 				.appendTo(menu);
 
 			$('<span>')
-				.addClass('hyper menuBtn')
-				.text(_('hyper.'))
-				.click(Engine.confirmHyperMode)
+				.addClass('menuBtn')
+				.text(_('save.'))
+				.click(Engine.saveToFile)
 				.appendTo(menu);
 
 			$('<span>')
 				.addClass('menuBtn')
 				.text(_('restart.'))
 				.click(Engine.confirmDelete)
-				.appendTo(menu);
-
-			$('<span>')
-				.addClass('menuBtn')
-				.text(_('share.'))
-				.click(Engine.share)
-				.appendTo(menu);
-
-			$('<span>')
-				.addClass('menuBtn')
-				.text(_('save.'))
-				.click(Engine.exportImport)
-				.appendTo(menu);
-
-			if(this.options.dropbox && Engine.Dropbox) {
-				this.dropbox = Engine.Dropbox.init();
-
-				$('<span>')
-					.addClass('menuBtn')
-					.text(_('dropbox.'))
-					.click(Engine.Dropbox.startDropbox)
-					.appendTo(menu);
-			}
-
-			$('<span>')
-				.addClass('menuBtn')
-				.text(_('github.'))
-				.click(function() { window.open('https://github.com/doublespeakgames/adarkroom'); })
 				.appendTo(menu);
 
 			// Register keypress handlers
@@ -228,6 +210,33 @@
 				}
 				localStorage.gameState = JSON.stringify(State);
 			}
+		},
+
+		saveToFile: function() {
+			const {dialog} = require('electron').remote;
+			const fs = require('fs');
+			dialog.showSaveDialog({}, function(path) {
+				if (path === undefined) {
+					return;
+				}
+				fs.writeFile(path, Engine.export64(), function(err) {
+					if (err == undefined) {
+						$('#saveNotify').css('opacity', 1).animate({opacity: 0}, 1000, 'linear');
+					}
+				});
+			});
+		},
+
+		loadFromFile: function() {
+			const {dialog} = require('electron').remote;
+			const fs = require('fs');
+			dialog.showOpenDialog({}, function(paths) {
+				if (paths === undefined) {
+					return;
+				}
+				var value = fs.readFileSync(paths[0], 'utf-8');
+				Engine.import64(value);
+			});
 		},
 
 		loadGame: function() {
@@ -377,91 +386,14 @@
 			if(typeof Storage != 'undefined' && localStorage) {
 				var prestige = Prestige.get();
 				window.State = {};
+				var lang = localStorage.lang;
 				localStorage.clear();
+				localStorage.lang = lang;
 				Prestige.set(prestige);
 			}
 			if(!noReload) {
 				location.reload();
 			}
-		},
-
-		getApp: function() {
-			Events.startEvent({
-				title: _('Get the App'),
-				scenes: {
-					start: {
-						text: [_('bring the room with you.')],
-						buttons: {
-							'ios': {
-								text: _('ios'),
-								nextScene: 'end',
-								onChoose: function () {
-									window.open('https://itunes.apple.com/app/apple-store/id736683061?pt=2073437&ct=adrproper&mt=8');
-								}
-							},
-							'android': {
-								text: _('android'),
-								nextScene: 'end',
-								onChoose: function() {
-									window.open('https://play.google.com/store/apps/details?id=com.yourcompany.adarkroom');
-								}
-							},
-							'close': {
-								text: _('close'),
-								nextScene: 'end'
-							}
-						}
-					}
-				}
-			});
-		},
-
-		share: function() {
-			Events.startEvent({
-				title: _('Share'),
-				scenes: {
-					start: {
-						text: [_('bring your friends.')],
-						buttons: {
-							'facebook': {
-								text: _('facebook'),
-								nextScene: 'end',
-								onChoose: function() {
-									window.open('https://www.facebook.com/sharer/sharer.php?u=' + Engine.SITE_URL, 'sharer', 'width=626,height=436,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no');
-								}
-							},
-							'google': {
-								text:_('google+'),
-								nextScene: 'end',
-								onChoose: function() {
-									window.open('https://plus.google.com/share?url=' + Engine.SITE_URL, 'sharer', 'width=480,height=436,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no');
-								}
-							},
-							'twitter': {
-								text: _('twitter'),
-								nextScene: 'end',
-								onChoose: function() {
-									window.open('https://twitter.com/intent/tweet?text=A%20Dark%20Room&url=' + Engine.SITE_URL, 'sharer', 'width=660,height=260,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');
-								}
-							},
-							'reddit': {
-								text: _('reddit'),
-								nextScene: 'end',
-								onChoose: function() {
-									window.open('http://www.reddit.com/submit?url=' + Engine.SITE_URL, 'sharer', 'width=960,height=700,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');
-								}
-							},
-							'close': {
-								text: _('close'),
-								nextScene: 'end'
-							}
-						}
-					}
-				}
-			},
-			{
-				width: '400px'
-			});
 		},
 
 		findStylesheet: function(title) {
@@ -500,30 +432,30 @@
 			}
 		},
 
-		confirmHyperMode: function(){
-			if (!Engine.options.doubleTime) {
-				Events.startEvent({
-					title: _('Go Hyper?'),
-					scenes: {
-						start: {
-							text: [_('turning hyper mode speeds up the game to x2 speed. do you want to do that?')],
-							buttons: {
-								'yes': {
-									text: _('yes'),
-									nextScene: 'end',
-									onChoose: Engine.triggerHyperMode
-								},
-								'no': {
-									text: _('no'),
-									nextScene: 'end'
-								}
+		confirmExit: function(){
+			Events.startEvent({
+				title: _('Exit?'),
+				scenes: {
+					start: {
+						text: [_('exit the game?')],
+						buttons: {
+							'yes': {
+								text: _('yes'),
+								nextScene: 'end',
+								onChoose: Engine.exit
+							},
+							'no': {
+								text: _('no'),
+								nextScene: 'end'
 							}
 						}
 					}
-				});
-			} else {
-				Engine.triggerHyperMode();
-			}
+				}
+			});
+		},
+
+		exit: function() {
+			window.close();
 		},
 
 		triggerHyperMode: function() {
@@ -553,25 +485,21 @@
 				module.tab.addClass('selected');
 
 				var slider = $('#locationSlider');
-				var stores = $('#storesContainer');
 				var panelIndex = $('.location').index(module.panel);
 				var diff = Math.abs(panelIndex - currentIndex);
 				slider.animate({left: -(panelIndex * 700) + 'px'}, 300 * diff);
-
-				if($SM.get('stores.wood') !== undefined) {
-					// FIXME Why does this work if there's an animation queue...?
-					stores.animate({right: -(panelIndex * 700) + 'px', top: 0}, 300 * diff);
-				}
 
 				if(Engine.activeModule == Room || Engine.activeModule == Path) {
 					// Don't fade out the weapons if we're switching to a module
 					// where we're going to keep showing them anyway.
 					if (module != Room && module != Path) {
 						$('div#weapons').animate({opacity: 0}, 300);
+						$('div#village').animate({opacity: 1}, 300);
 					}
 				}
 
 				if(module == Room || module == Path) {
+					$('div#village').animate({opacity: 0}, 300);
 					$('div#weapons').animate({opacity: 1}, 300);
 				}
 
@@ -579,35 +507,6 @@
 				module.onArrival(diff);
 				Notifications.printQueue(module);
 
-			}
-		},
-
-		/* Move the stores panel beneath top_container (or to top: 0px if top_container
-		 * either hasn't been filled in or is null) using transition_diff to sync with
-		 * the animation in Engine.travelTo().
-		 */
-		moveStoresView: function(top_container, transition_diff) {
-			var stores = $('#storesContainer');
-
-			// If we don't have a storesContainer yet, leave.
-			if(typeof(stores) === 'undefined') return;
-
-			if(typeof(transition_diff) === 'undefined') transition_diff = 1;
-
-			if(top_container === null) {
-				stores.animate({top: '0px'}, {queue: false, duration: 300 * transition_diff});
-			}
-			else if(!top_container.length) {
-				stores.animate({top: '0px'}, {queue: false, duration: 300 * transition_diff});
-			}
-			else {
-				stores.animate({
-						top: top_container.height() + 26 + 'px'
-					},
-					{
-						queue: false,
-						duration: 300 * transition_diff
-				});
 			}
 		},
 
@@ -696,6 +595,12 @@
 							}
 						}
 						Engine.log('right');
+						break;
+
+					case 27: // Escape
+						if (!Engine.keyLock) {
+							Engine.confirmExit();
+						}
 						break;
 				}
 			}

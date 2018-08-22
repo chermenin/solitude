@@ -86,18 +86,9 @@ var Ship = {
 	options: {}, // Nothing for now
 	
 	onArrival: function(transition_diff) {
-		Ship.setTitle();
 		if(!$SM.get('game.spaceShip.seenShip')) {
 			Notifications.notify(Ship, _('somewhere above the debris cloud, the wanderer fleet hovers. been on this rock too long.'));
 			$SM.set('game.spaceShip.seenShip', true);
-		}
-
-		Engine.moveStoresView(null, transition_diff);
-	},
-	
-	setTitle: function() {
-		if(Engine.activeModule == this) {
-			document.title = _("An Old Starship");
 		}
 	},
 	

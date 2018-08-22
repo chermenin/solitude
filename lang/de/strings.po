@@ -250,6 +250,22 @@ msgstr "teilen."
 msgid "save."
 msgstr "speichern."
 
+#: script/engine.js:168
+msgid "load."
+msgstr "laden."
+
+#: script/engine.js:168
+msgid "exit."
+msgstr "beenden."
+
+#: script/engine.js:168
+msgid "Exit?"
+msgstr "Beenden?"
+
+#: ../../script/engine.js:168
+msgid "exit the game?"
+msgstr "das spiel verlassen?"
+
 #: script/engine.js:177
 msgid "dropbox."
 msgstr "dropbox."
@@ -2657,8 +2673,8 @@ msgid "the compass points "
 msgstr "der kompass zeigt"
 
 #: script/path.js:102
-msgid "perks:"
-msgstr "boni:"
+msgid "perks"
+msgstr "boni"
 
 #: script/path.js:132
 msgid "none"
@@ -2683,6 +2699,22 @@ msgstr "gewicht"
 #: script/path.js:255
 msgid "available"
 msgstr "verfügbar"
+
+#: ../../script/path.js:160
+msgid "restores {0} hp"
+msgstr "wieder her {0} hp"
+
+#: ../../script/path.js:161
+msgid "use with rifle"
+msgstr "verwenden sie mit gewehr"
+
+#: ../../script/path.js:165
+msgid "use with laser rifle"
+msgstr "verwenden sie mit lasergewehr"
+
+#: ../../script/path.js:165
+msgid "damage"
+msgstr "schäden"
 
 #: script/room.js:16
 msgid "trap"

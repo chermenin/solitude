@@ -1,7 +1,9 @@
-.button{width: 100px !important;}
+.button{width: 115px !important;}
 #outsidePanel .button{width: 115px !important;}
 .eventPanel .button {width: 122px !important;}
 .button .tooltip {width: 120px !important;}
 #workers {width: 180px !important;}
 #hullRow {width: 90px !important;}
 #engineRow {width: 90px !important;}
+#craftBtns {left:155px !important;}
+div#buyBtns {left:310px !important;}

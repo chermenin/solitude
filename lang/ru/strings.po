@@ -250,6 +250,22 @@ msgstr "поделиться."
 msgid "save."
 msgstr "сохранить."
 
+#: ../../script/engine.js:168
+msgid "load."
+msgstr "загрузить."
+
+#: ../../script/engine.js:168
+msgid "exit."
+msgstr "выйти."
+
+#: ../../script/engine.js:168
+msgid "Exit?"
+msgstr "Выйти?"
+
+#: ../../script/engine.js:168
+msgid "exit the game?"
+msgstr "вы действительно хотите выйти?"
+
 #: ../../script/engine.js:177
 msgid "dropbox."
 msgstr "dropbox"
@@ -2635,8 +2651,8 @@ msgid "the compass points "
 msgstr "компас указывает"
 
 #: ../../script/path.js:102
-msgid "perks:"
-msgstr "перки:"
+msgid "perks"
+msgstr "перки"
 
 #: ../../script/path.js:132
 msgid "none"
@@ -2661,6 +2677,22 @@ msgstr "вес"
 #: ../../script/path.js:255
 msgid "available"
 msgstr "доступно"
+
+#: ../../script/path.js:160
+msgid "restores {0} hp"
+msgstr "восстанавливает здоровье на {0} единиц"
+
+#: ../../script/path.js:161
+msgid "use with rifle"
+msgstr "для ружья"
+
+#: ../../script/path.js:165
+msgid "use with laser rifle"
+msgstr "для лазерной винтовки"
+
+#: ../../script/path.js:165
+msgid "damage"
+msgstr "урон"
 
 #: ../../script/room.js:16
 msgid "trap"
@@ -3061,7 +3093,7 @@ msgstr "склад"
 
 #: ../../script/room.js:779
 msgid "weapons"
-msgstr "оружия"
+msgstr "оружие"
 
 #: ../../script/room.js:914
 msgid "total"

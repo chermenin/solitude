@@ -253,7 +253,7 @@ var StateManager = {
 		if(version == 1.1) {
 			//v1.2 added the Swamp to the map, so add it to already generated maps
 			if($SM.get('world')) {
-				World.placeLandmark(15, World.RADIUS * 1.5, World.TILE.SWAMP, $SM.get('world.map'));
+				World.placeLandmark(15, World.WIDTH * 1.5, World.TILE.SWAMP, $SM.get('world.map'));
 			}
 			Engine.log('upgraded save to v1.2');
 			version = 1.2;

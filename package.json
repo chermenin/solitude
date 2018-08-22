@@ -1,22 +1,54 @@
 {
   "name": "solitude",
   "version": "1.0.0",
-  "description": "The Solitude game",
+  "description": "A dark room on your desktop",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "build"
+  },
+  "build": {
+    "asarUnpack": "music/**.*",
+    "appId": "ru.chermenin.solitude",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "icon": "build/icon.icns",
+      "category": "Game",
+      "executableName": "solitude",
+      "desktop": {
+        "Name": "Solitude",
+        "Exec": "solitude",
+        "Icon": "/usr/share/icons/hicolor/256x256/apps/solitude.png",
+        "Type": "Application",
+        "Categories": "Game"
+      }
+    }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chermenin/solitude.git"
   },
-  "author": "Alex Chermenin",
+  "author": "Alex Chermenin <alex@chermenin.ru>",
   "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/chermenin/solitude/issues"
   },
   "homepage": "https://github.com/chermenin/solitude#readme",
   "dependencies": {
-    "electron": "^2.0.7"
+    "player": "^0.6.1"
+  },
+  "devDependencies": {
+    "electron": "^2.0.7",
+    "electron-builder": "^20.28.2"
   }
 }

@@ -43,7 +43,7 @@ var Room = {
 		'hut': {
 			name: _('hut'),
 			button: null,
-			maximum: 20,
+			maximum: 25,
 			availableMsg: _("builder says there are more wanderers. says they'll work, too."),
 			buildMsg: _('builder puts up a hut, out in the forest. says word will get around.'),
 			maxMsg: _('no more room for huts.'),
@@ -513,7 +513,7 @@ var Room = {
 		}).appendTo('div#roomPanel');
 		
 		// Create the stores container
-		$('<div>').attr('id', 'storesContainer').prependTo('div#roomPanel');
+		$('<div>').attr('id', 'storesContainer').prependTo('div#wrapper');
 		
 		//subscribe to stateUpdates
 		$.Dispatch('stateUpdate').subscribe(Room.handleStateUpdates);
@@ -564,8 +564,6 @@ var Room = {
 			Room.updateIncomeView();
 			Notifications.notify(Room, _("the stranger is standing by the fire. she says she can help. says she builds things."));
 		}
-		
-		Engine.moveStoresView(null, transition_diff);
 	},
 	
 	TempEnum: {
@@ -602,9 +600,6 @@ var Room = {
 	
 	setTitle: function() {
 		var title = $SM.get('game.fire.value') < 2 ? _("A Dark Room") : _("A Firelit Room");
-		if(Engine.activeModule == this) {
-			document.title = title;
-		}
 		$('div#location_room').text(title);
 	},
 	
@@ -868,7 +863,7 @@ var Room = {
 		}
 		
 		if(wNeedsAppend && weapons.children().length > 0) {
-			weapons.appendTo('div#storesContainer');
+			weapons.appendTo('div#wrapper');
 			weapons.animate({opacity: 1}, 300, 'linear');
 		}
 		

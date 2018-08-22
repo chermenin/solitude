@@ -53,7 +53,6 @@ var Space = {
 		Engine.keyLock = false;
 		Space.hull = Ship.getMaxHull();
 		Space.altitude = 0;
-		Space.setTitle();
 		Space.updateHull();
 		
 		Space.up = 
@@ -67,26 +66,6 @@ var Space = {
 		});
 		Space.startAscent();
 		Space._shipTimer = setInterval(Space.moveShip, 33);
-	},
-	
-	setTitle: function() {
-		if(Engine.activeModule == this) {
-			var t;
-			if(Space.altitude < 10) {
-				t = _("Troposphere");
-			} else if(Space.altitude < 20) {
-				t = _("Stratosphere");
-			} else if(Space.altitude < 30) {
-				t = _("Mesosphere");
-			} else if(Space.altitude < 45) {
-				t = _("Thermosphere");
-			} else if(Space.altitude < 60){
-				t = _("Exosphere");
-			} else {
-				t = _("Space");
-			}
-			document.title = t;
-		}
 	},
 	
 	getSpeed: function() {
@@ -253,9 +232,6 @@ var Space = {
 		Space.drawStars();
 		Space._timer = setInterval(function() {
 			Space.altitude += 1;
-			if(Space.altitude % 10 === 0) {
-				Space.setTitle();
-			}
 			if(Space.altitude > 60) {
 				clearInterval(Space._timer);
 			}
@@ -449,27 +425,16 @@ var Space = {
 										.appendTo('.centerCont');
 								$('<span>')
 										.addClass('endGame')
-										.text(_('expanded story. alternate ending. behind the scenes commentary. get the app.'))
+										.text(_('Desktop game by Alex Chermenin'))
 										.appendTo('.centerCont')
 										.animate({opacity:1}, 1500);
 								$('<br />')
 										.appendTo('.centerCont');
-								$('<br />')
-										.appendTo('.centerCont');
 								$('<span>')
-									.addClass('endGame endGameOption')
-									.text(_('iOS.'))
-									.click(function() { window.open('https://itunes.apple.com/app/apple-store/id736683061?pt=2073437&ct=gameover&mt=8'); })
-									.appendTo('.centerCont')
-									.animate({opacity:1},1500);
-								$('<br />')
-										.appendTo('.centerCont');
-								$('<span>')
-										.addClass('endGame endGameOption')
-										.text(_('android.'))
-										.click(function() { window.open('https://play.google.com/store/apps/details?id=com.yourcompany.adarkroom'); })
+										.addClass('endGame')
+										.text(_('Music by Ryan Andersen'))
 										.appendTo('.centerCont')
-										.animate({opacity:1},1500);
+										.animate({opacity:1}, 1500);
 								Engine.options = {};
 								Engine.deleteSave(true);
 							}

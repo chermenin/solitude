@@ -1,7 +1,12 @@
 /* Fonts */
+@font-face {
+	font-family: 'NotoSerif Regular' ;
+	src: url('../font/NotoSerif-Regular.ttf') format('truetype');
+}
+
 body, .tooltip, select.menuBtn {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 16px;
+	font-family: "NotoSerif Regular", Times, serif;
+	font-size: 14px;
 	font-weight: normal;
 	line-height: normal;
 	letter-spacing: normal;
@@ -42,7 +47,7 @@ div.clear {
 
 div#wrapper {
 	margin: auto;
-	width: 700px;
+	width: 940px;
 	padding: 20px 0 0 220px;
 	position: relative;
 }

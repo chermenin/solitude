@@ -99,7 +99,7 @@ var Path = {
 			var needsAppend = false;
 			if(perks.length === 0) {
 				needsAppend = true;
-				perks = $('<div>').attr({'id': 'perks', 'data-legend': _('perks:')});
+				perks = $('<div>').attr({'id': 'perks', 'data-legend': _('perks')});
 			}
 			for(var k in $SM.get('character.perks')) {
 				var id = 'perk_' + k.replace(' ', '-');
@@ -113,10 +113,6 @@ var Path = {
 			
 			if(needsAppend && perks.children().length > 0) {
 				perks.prependTo(Path.panel);
-			}
-			
-			if(!ignoreStores && Engine.activeModule === Path) {
-				$('#storesContainer').css({top: perks.height() + 26 + Path._STORES_OFFSET + 'px'});
 			}
 		}
 	},
@@ -161,15 +157,15 @@ var Path = {
 		var currentBagCapacity = 0;
 		// Add the non-craftables to the craftables
 		var carryable = $.extend({
-			'cured meat': { type: 'tool', desc: 'restores '+ World.MEAT_HEAL + ' hp' },
-			'bullets': { type: 'tool', desc: 'use with rifle' },
+			'cured meat': { type: 'tool', desc: _('restores {0} hp', World.MEAT_HEAL) },
+			'bullets': { type: 'tool', desc: _('use with rifle') },
 			'grenade': {type: 'weapon' },
 			'bolas': {type: 'weapon' },
 			'laser rifle': {type: 'weapon' },
-			'energy cell': {type: 'tool', desc: 'use with laser rifle' },
+			'energy cell': {type: 'tool', desc: _('use with laser rifle') },
 			'bayonet': {type: 'weapon' },
 			'charm': {type: 'tool'},
-			'medicine': {type: 'tool', desc: 'restores ' + World.MEDS_HEAL + ' hp' }
+			'medicine': {type: 'tool', desc:  _('restores {0} hp', World.MEDS_HEAL) }
 		}, Room.Craftables);
 		
 		for(var k in carryable) {
@@ -301,15 +297,15 @@ var Path = {
 	},
 	
 	onArrival: function(transition_diff) {
-		Path.setTitle();
 		Path.updateOutfitting();
 		Path.updatePerks(true);
-
-		Engine.moveStoresView($('#perks'), transition_diff);
-	},
-	
-	setTitle: function() {
-		document.title = _('A Dusty Path');
+		$('div#stores').animate({opacity: 1}, 300);
+		$('div#weapons').animate({opacity: 1}, 300);
+		$('div#perks').css('top', ($('div#weapons').outerHeight() + 15) + 'px')
+		$('div#bagspace-world').animate({opacity: 0}, 300);
+		$('div#backpackSpace').animate({opacity: 0}, 300);
+		$('div#backpackTitle').animate({opacity: 0}, 300);
+		$('div#worldOuter').animate({opacity: 0}, 300);
 	},
 	
 	embark: function() {
@@ -333,7 +329,6 @@ var Path = {
 
 		if( typeof reset != "undefined" ){
 			$('#perks').css('top', '0px');
-			// $('#storesContainer').css('top', '206px');
 			Path._STORES_OFFSET = 0;
 			return;
 		}

@@ -20,7 +20,6 @@ Events.Outside = [
 					Outside.updateTrapButton();
 				},
 				notification: _('some traps have been destroyed'),
-				blink: true,
 				buttons: {
 					'track': {
 						text: _('track them'),
@@ -77,7 +76,6 @@ Events.Outside = [
 					_('all residents in the hut perished in the fire.')
 				],
 				notification: _('a fire has started'),
-				blink: true,
 				onLoad: function() {
 					Outside.destroyHuts(1);
 				},
@@ -103,7 +101,6 @@ Events.Outside = [
 					_('medicine is needed immediately.')
 				],
 				notification: _('some villagers are ill'),
-				blink: true,
 				buttons: {
 					'heal': {
 						text: _('1 medicine'),
@@ -161,7 +158,6 @@ Events.Outside = [
 					_('medicine is needed immediately.')
 				],
 				notification: _('a plague afflicts the village'),
-				blink: true,
 				buttons: {
 					/* Because there is a serious need for medicine, the price is raised. */
 					'buyMedicine': {
@@ -242,7 +238,6 @@ Events.Outside = [
 					meat: 100,
 					teeth: 10
 				},
-				blink: true,
 				buttons: {
 					'end': {
 						text: _('go home'),
@@ -276,7 +271,6 @@ Events.Outside = [
 					'cured meat': 50
 				},
 
-				blink: true,
 				buttons: {
 					'end': {
 						text: _('go home'),

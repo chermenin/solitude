@@ -1,15 +1,18 @@
 #worldOuter {
 	position: relative;
 	display: inline-block;
+	top: 27px;
+	opacity: 0;
 }
 
 #map {
 	position: relative;
 	font-family: "Courier New", Courier, monospace;
+	font-size: 80%;
 	border: 1px solid black;
 	overflow: hidden;
 	display: inline-block;
-	line-height: 10px;
+	line-height: 8px;
 	letter-spacing: 1px;
 	color: #999;
 	cursor: default;
@@ -29,39 +32,37 @@
 }
 
 #bagspace-world {
-	border: 1px solid black;
-	height: 62px;
-	margin-bottom: 5px;
-	margin-top: 13px;
-	overflow: hidden;
-}
-
-#bagspace-world > div {
-	padding: 6px 4px;
-}
-
-#backpackTitle {
 	position: absolute;
-	top: 0px;
-	left: 10px;
-	background-color: white;
-	z-index: 1;
+	cursor: default;
+	top: 6px;
+	padding: 12px 10px 4px 10px;
+	width: 200px;
+	opacity: 0;
 }
 
 #backpackSpace {
 	position: absolute;
-	top: 0px;
+	top: -6px;
 	right: 10px;
 	background-color: white;
-	z-index: 1;
+	z-index: 20;
+}
+
+#backpackTitle {
+	position: absolute;
+	top: -6px;
+	left: 10px;
+	background-color: white;
+	z-index: 20;
 }
 
 #healthCounter {
-	position: absolute;
-	top: 0px;
-	left: 80px;
+	position: relative;
+	top: 6px;
+	left: 10px;
 	background-color: white;
-	z-index: 1;
+	z-index: 20;
+	display: inline-block;
 }
 
 div.supplyItem {

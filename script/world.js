@@ -1,7 +1,8 @@
 var World = {
 
-	RADIUS: 30,
-	VILLAGE_POS: [30, 30],
+	HEIGHT: 40,
+	WIDTH: 44,
+	VILLAGE_POS: [44, 40],
 	TILE: {
 		VILLAGE: 'A',
 		IRON_MINE: 'I',
@@ -120,18 +121,18 @@ var World = {
 		World.LANDMARKS[World.TILE.IRON_MINE] = { num: 1, minRadius: 5, maxRadius: 5, scene: 'ironmine', label:  _('Iron&nbsp;Mine') };
 		World.LANDMARKS[World.TILE.COAL_MINE] = { num: 1, minRadius: 10, maxRadius: 10, scene: 'coalmine', label:  _('Coal&nbsp;Mine') };
 		World.LANDMARKS[World.TILE.SULPHUR_MINE] = { num: 1, minRadius: 20, maxRadius: 20, scene: 'sulphurmine', label:  _('Sulphur&nbsp;Mine') };
-		World.LANDMARKS[World.TILE.HOUSE] = { num: 10, minRadius: 0, maxRadius: World.RADIUS * 1.5, scene: 'house', label:  _('An&nbsp;Old&nbsp;House') };
+		World.LANDMARKS[World.TILE.HOUSE] = { num: 10, minRadius: 0, maxRadius: World.WIDTH * 1.5, scene: 'house', label:  _('An&nbsp;Old&nbsp;House') };
 		World.LANDMARKS[World.TILE.CAVE] = { num: 5, minRadius: 3, maxRadius: 10, scene: 'cave', label:  _('A&nbsp;Damp&nbsp;Cave') };
 		World.LANDMARKS[World.TILE.TOWN] = { num: 10, minRadius: 10, maxRadius: 20, scene: 'town', label:  _('An&nbsp;Abandoned&nbsp;Town') };
-		World.LANDMARKS[World.TILE.CITY] = { num: 20, minRadius: 20, maxRadius: World.RADIUS * 1.5, scene: 'city', label:  _('A&nbsp;Ruined&nbsp;City') };
+		World.LANDMARKS[World.TILE.CITY] = { num: 20, minRadius: 20, maxRadius: World.WIDTH * 1.5, scene: 'city', label:  _('A&nbsp;Ruined&nbsp;City') };
 		World.LANDMARKS[World.TILE.SHIP] = { num: 1, minRadius: 28, maxRadius: 28, scene: 'ship', label:  _('A&nbsp;Crashed&nbsp;Starship')};
-		World.LANDMARKS[World.TILE.BOREHOLE] = { num: 10, minRadius: 15, maxRadius: World.RADIUS * 1.5, scene: 'borehole', label:  _('A&nbsp;Borehole')};
-		World.LANDMARKS[World.TILE.BATTLEFIELD] = { num: 5, minRadius: 18, maxRadius: World.RADIUS * 1.5, scene: 'battlefield', label:  _('A&nbsp;Battlefield')};
-		World.LANDMARKS[World.TILE.SWAMP] = { num: 1, minRadius: 15, maxRadius: World.RADIUS * 1.5, scene: 'swamp', label:  _('A&nbsp;Murky&nbsp;Swamp')};
+		World.LANDMARKS[World.TILE.BOREHOLE] = { num: 10, minRadius: 15, maxRadius: World.WIDTH * 1.5, scene: 'borehole', label:  _('A&nbsp;Borehole')};
+		World.LANDMARKS[World.TILE.BATTLEFIELD] = { num: 5, minRadius: 18, maxRadius: World.WIDTH * 1.5, scene: 'battlefield', label:  _('A&nbsp;Battlefield')};
+		World.LANDMARKS[World.TILE.SWAMP] = { num: 1, minRadius: 15, maxRadius: World.WIDTH * 1.5, scene: 'swamp', label:  _('A&nbsp;Murky&nbsp;Swamp')};
 
 		// Only add the cache if there is prestige data
 		if($SM.get('previous.stores')) {
-			World.LANDMARKS[World.TILE.CACHE] = { num: 1, minRadius: 10, maxRadius: World.RADIUS * 1.5, scene: 'cache', label:  _('A&nbsp;Destroyed&nbsp;Village')};
+			World.LANDMARKS[World.TILE.CACHE] = { num: 1, minRadius: 10, maxRadius: World.WIDTH * 1.5, scene: 'cache', label:  _('A&nbsp;Destroyed&nbsp;Village')};
 		}
 
 		if(typeof $SM.get('features.location.world') == 'undefined') {
@@ -149,9 +150,9 @@ var World = {
 		var outer = $('<div>').attr('id', 'worldOuter').appendTo(this.panel);
 
 		// Create the bag panel
-		$('<div>').attr('id', 'bagspace-world').append($('<div>')).appendTo(outer);
-		$('<div>').attr('id', 'backpackTitle').appendTo(outer);
-		$('<div>').attr('id', 'backpackSpace').appendTo(outer);
+		$('<div>').attr('id', 'bagspace-world').append($('<div>')).appendTo('div#storesContainer');
+		$('<div>').attr('id', 'backpackSpace').appendTo('div#storesContainer');
+		$('<div>').attr('id', 'backpackTitle').appendTo('div#storesContainer');
 		$('<div>').attr('id', 'healthCounter').appendTo(outer);
 
 		Engine.updateOuterSlider();
@@ -190,7 +191,7 @@ var World = {
 			for (var i = 0; i < Math.pow(World.getDistance(startPos, World.VILLAGE_POS) + 2, 2); i++) {
 				searchX = startPos[0] + x;
 				searchY = startPos[1] + y;
-				if (0 < searchX && searchX < World.RADIUS * 2 && 0 < searchY && searchY < World.RADIUS * 2) {
+				if (0 < searchX && searchX < World.WIDTH * 2 && 0 < searchY && searchY < World.HEIGHT * 2) {
 					// check for road
 					var tile = World.state.map[searchX][searchY];
 					if (
@@ -326,7 +327,7 @@ var World = {
 
 	moveSouth: function() {
 		Engine.log('South');
-		if(World.curPos[1] < World.RADIUS * 2) World.move(World.SOUTH);
+		if(World.curPos[1] < World.HEIGHT * 2) World.move(World.SOUTH);
 	},
 
 	moveWest: function() {
@@ -336,7 +337,7 @@ var World = {
 
 	moveEast: function() {
 		Engine.log('East');
-		if(World.curPos[0] < World.RADIUS * 2) World.move(World.EAST);
+		if(World.curPos[0] < World.WIDTH * 2) World.move(World.EAST);
 	},
 
 	move: function(direction) {
@@ -398,8 +399,8 @@ var World = {
 	click: function(event) {
 		var map = $('#map'),
 			// measure clicks relative to the centre of the current location
-			centreX = map.offset().left + map.width() * World.curPos[0] / (World.RADIUS * 2),
-			centreY = map.offset().top + map.height() * World.curPos[1] / (World.RADIUS * 2),
+			centreX = map.offset().left + map.width() * World.curPos[0] / (World.HEIGHT * 2),
+			centreY = map.offset().top + map.height() * World.curPos[1] / (World.WIDTH * 2),
 			clickX = event.pageX - centreX,
 			clickY = event.pageY - centreY;
 		if (clickX > clickY && clickX < -clickY) {
@@ -596,11 +597,11 @@ var World = {
 	},
 
 	newMask: function() {
-		var mask = new Array(World.RADIUS * 2 + 1);
-		for(var i = 0; i <= World.RADIUS * 2; i++) {
-			mask[i] = new Array(World.RADIUS * 2 + 1);
+		var mask = new Array(World.WIDTH * 2 + 1);
+		for(var i = 0; i <= World.WIDTH * 2; i++) {
+			mask[i] = new Array(World.HEIGHT * 2 + 1);
 		}
-		World.lightMap(World.RADIUS, World.RADIUS, mask);
+		World.lightMap(World.WIDTH, World.HEIGHT, mask);
 		return mask;
 	},
 
@@ -615,8 +616,8 @@ var World = {
 		mask[x][y] = true;
 		for(var i = -r; i <= r; i++) {
 			for(var j = -r + Math.abs(i); j <= r - Math.abs(i); j++) {
-				if(y + j >= 0 && y + j <= World.RADIUS * 2 &&
-						x + i <= World.RADIUS * 2 &&
+				if(y + j >= 0 && y + j <= World.HEIGHT * 2 &&
+						x + i <= World.WIDTH * 2 &&
 						x + i >= 0) {
 					mask[x+i][y+j] = true;
 				}
@@ -645,8 +646,8 @@ var World = {
 		if(!World.seenAll){
 			var x,y,mask = $SM.get('game.world.mask');
 			do {
-				x = Math.floor(Math.random() * (World.RADIUS * 2) + 1);
-				y = Math.floor(Math.random() * (World.RADIUS * 2) + 1);
+				x = Math.floor(Math.random() * World.WIDTH * 2 + 1);
+				y = Math.floor(Math.random() * World.HEIGHT * 2 + 1);
 			} while (mask[x][y]);
 			World.uncoverMap(x, y, 5, mask);
 		}
@@ -654,28 +655,28 @@ var World = {
 	},
 
 	generateMap: function() {
-		var map = new Array(World.RADIUS * 2 + 1);
-		for(var i = 0; i <= World.RADIUS * 2; i++) {
-			map[i] = new Array(World.RADIUS * 2 + 1);
+		var map = new Array(World.WIDTH * 2 + 1);
+		for(var i = 0; i <= World.WIDTH * 2; i++) {
+			map[i] = new Array(World.HEIGHT * 2 + 1);
 		}
 		// The Village is always at the exact center
 		// Spiral out from there
-		map[World.RADIUS][World.RADIUS] = World.TILE.VILLAGE;
-		for(var r = 1; r <= World.RADIUS; r++) {
+		map[World.WIDTH][World.HEIGHT] = World.TILE.VILLAGE;
+		for(var r = 1; r <= World.WIDTH; r++) {
 			for(var t = 0; t < r * 8; t++) {
 				var x, y;
 				if(t < 2 * r) {
-					x = World.RADIUS - r + t;
-					y = World.RADIUS - r;
+					x = World.WIDTH - r + t;
+					y = World.HEIGHT - r;
 				} else if(t < 4 * r) {
-					x = World.RADIUS + r;
-					y = World.RADIUS - (3 * r) + t;
+					x = World.WIDTH + r;
+					y = World.HEIGHT - (3 * r) + t;
 				} else if(t < 6 * r) {
-					x = World.RADIUS + (5 * r) - t;
-					y = World.RADIUS + r;
+					x = World.WIDTH + (5 * r) - t;
+					y = World.HEIGHT + r;
 				} else {
-					x = World.RADIUS - r;
-					y = World.RADIUS + (7 * r) - t;
+					x = World.WIDTH - r;
+					y = World.HEIGHT + (7 * r) - t;
 				}
 
 				map[x][y] = World.chooseTile(x, y, map);
@@ -704,15 +705,15 @@ var World = {
 		var index = 0;
 		var targets = [];
 		search: // label for coordinate research
-		for(var i = 0; i <= World.RADIUS * 2; i++){
-			for(var j = 0; j <= World.RADIUS * 2; j++){
+		for(var i = 0; i <= World.WIDTH * 2; i++){
+			for(var j = 0; j <= World.HEIGHT * 2; j++){
 				if(map[i][j].charAt(0) === target){
 					// search result is stored as an object;
 					// items are listed as they appear in the map, tl-br
 					// each item has relative coordinates and a compass-type direction
 					targets[index] = {
-						x : i - World.RADIUS,
-						y : j - World.RADIUS,
+						x : i - World.WIDTH,
+						y : j - World.HEIGHT,
 					};
 					index++;
 					if(index === max){
@@ -741,19 +742,19 @@ var World = {
 
 	placeLandmark: function(minRadius, maxRadius, landmark, map) {
 
-		var x = World.RADIUS, y = World.RADIUS;
+		var x = World.WIDTH, y = World.HEIGHT;
 		while(!World.isTerrain(map[x][y])) {
 			var r = Math.floor(Math.random() * (maxRadius - minRadius)) + minRadius;
 			var xDist = Math.floor(Math.random() * r);
 			var yDist = r - xDist;
 			if(Math.random() < 0.5) xDist = -xDist;
 			if(Math.random() < 0.5) yDist = -yDist;
-			x = World.RADIUS + xDist;
+			x = World.WIDTH + xDist;
 			if(x < 0) x = 0;
-			if(x > World.RADIUS * 2) x = World.RADIUS * 2;
-			y = World.RADIUS + yDist;
+			if(x > World.WIDTH * 2) x = World.WIDTH * 2;
+			y = World.HEIGHT + yDist;
 			if(y < 0) y = 0;
-			if(y > World.RADIUS * 2) y = World.RADIUS * 2;
+			if(y > World.HEIGHT * 2) y = World.HEIGHT * 2;
 		}
 		map[x][y] = landmark;
 		return [x, y];
@@ -767,8 +768,8 @@ var World = {
 
 		var adjacent = [
 			y > 0 ? map[x][y-1] : null,
-			y < World.RADIUS * 2 ? map[x][y+1] : null,
-			x < World.RADIUS * 2 ? map[x+1][y] : null,
+			y < World.HEIGHT * 2 ? map[x][y+1] : null,
+			x < World.WIDTH * 2 ? map[x+1][y] : null,
 			x > 0 ? map[x-1][y] : null
 		];
 
@@ -831,15 +832,15 @@ var World = {
 			map.click(World.click);
 		}
 		var mapString = "";
-		for(var j = 0; j <= World.RADIUS * 2; j++) {
-			for(var i = 0; i <= World.RADIUS * 2; i++) {
+		for(var j = 0; j <= World.HEIGHT * 2; j++) {
+			for(var i = 0; i <= World.WIDTH * 2; i++) {
 				var ttClass = "";
-				if(i > World.RADIUS) {
+				if(i > World.WIDTH) {
 					ttClass += " left";
 				} else {
 					ttClass += " right";
 				}
-				if(j > World.RADIUS) {
+				if(j > World.HEIGHT) {
 					ttClass += " top";
 				} else {
 					ttClass += " bottom";
@@ -884,14 +885,19 @@ var World = {
 			Path.outfit = {};
 			$SM.remove('outfit');
 			$('#outerSlider').animate({opacity: '0'}, 600, 'linear', function() {
+				$('div#bagspace-world').animate({opacity: 0}, 300);
+				$('div#backpackSpace').animate({opacity: 0}, 300);
+				$('div#backpackTitle').animate({opacity: 0}, 300);
+				$('div#worldOuter').animate({opacity: 0}, 300);
 				$('#outerSlider').css('left', '0px');
 				$('#locationSlider').css('left', '0px');
-				$('#storesContainer').css({'top': '0px', 'right': '0px'});
 				Engine.activeModule = Room;
 				$('div.headerButton').removeClass('selected');
 				Room.tab.addClass('selected');
 				Engine.setTimeout(function(){
 					Room.onArrival();
+					$('div#stores').animate({opacity: 1}, 300);
+					$('div#weapons').animate({opacity: 1}, 300);
 					$('#outerSlider').animate({opacity:'1'}, 600, 'linear');
 					Button.cooldown($('#embarkButton'));
 					Engine.keyLock = false;
@@ -1005,15 +1011,15 @@ var World = {
 		World.usedOutposts = {};
 		World.curPos = World.copyPos(World.VILLAGE_POS);
 		World.drawMap();
-		World.setTitle();
 		World.dead = false;
 		$('div#bagspace-world > div').empty();
 		World.updateSupplies();
-		$('#bagspace-world').width($('#map').width());
-	},
-
-	setTitle: function() {
-		document.title = _('A Barren World');
+		$('div#stores').animate({opacity: 0}, 300);
+		$('div#weapons').animate({opacity: 0}, 300);
+		$('div#backpackSpace').animate({opacity: 1}, 300);
+		$('div#backpackTitle').animate({opacity: 1}, 300);
+		$('div#bagspace-world').animate({opacity: 1}, 300);
+		$('div#worldOuter').animate({opacity: 1}, 300);
 	},
 
 	copyPos: function(pos) {

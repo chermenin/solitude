@@ -470,10 +470,6 @@ var Outside = {
 		}
 		
 		this.setTitle();
-
-		if(!ignoreStores && Engine.activeModule === Outside && village.children().length > 1) {
-			$('#storesContainer').css({top: village.height() + 26 + Outside._STORES_OFFSET + 'px'});
-		}
 	},
 	
 	checkWorker: function(name) {
@@ -571,10 +567,6 @@ var Outside = {
 		} else {
 			title = _("A Raucous Village");
 		}
-		
-		if(Engine.activeModule == this) {
-			document.title = title;
-		}
 		$('#location_outside').text(title);
 	},
 	
@@ -586,8 +578,6 @@ var Outside = {
 		}
 		Outside.updateTrapButton();
 		Outside.updateVillage(true);
-
-		Engine.moveStoresView($('#village'), transition_diff);
 	},
 	
 	gatherWood: function() {
@@ -650,7 +640,6 @@ var Outside = {
 
 		if( typeof reset != "undefined" ){
 			$('#village').css('top', '0px');
-			// $('#storesContainer').css('top', '224px');
 			Outside._STORES_OFFSET = 0;
 			return false;
 		}

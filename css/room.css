@@ -1,6 +1,6 @@
 div#buildBtns {
 	position: absolute;
-	top: 50px;
+	top: 60px;
 	left: 0px;
 }
 
@@ -12,19 +12,19 @@ div#buildBtns:before, div#craftBtns:before, div#buyBtns:before {
 
 div#craftBtns {
 	position: absolute;
-	top: 50px;
+	top: 60px;
 	left: 150px;
 }
 
 div#buyBtns {
 	position: absolute;
-	top: 50px;
+	top: 60px;
 	left: 300px;
 }
 
 div#storesContainer {
 	position: absolute;
-	top: 0px;
+	top: 60px;
 	right: 0px;
 }
 
@@ -50,9 +50,9 @@ div.storeRow {
 }
 
 div#weapons {
-	margin-top: 15px;
-	position: relative;
-	right: 0px;
+	position: absolute;
+	top: 60px;
+	right: 240px;
 	border: 1px solid black;
 	cursor: default;
 	padding: 5px 10px;

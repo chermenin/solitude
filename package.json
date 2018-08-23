@@ -19,7 +19,11 @@
       ],
       "icon": "build/icon.ico"
     },
-    "mac": {},
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
     "linux": {
       "target": [
         "deb"
@@ -34,6 +38,9 @@
         "Type": "Application",
         "Categories": "Game"
       }
+    },
+    "nsis":{
+      "oneClick": false
     }
   },
   "repository": {

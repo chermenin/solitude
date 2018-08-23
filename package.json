@@ -1,7 +1,7 @@
 {
   "name": "solitude",
-  "version": "1.0.0",
-  "description": "A dark room on your desktop",
+  "version": "1.1.0",
+  "description": "A Dark Room on your desktop",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,9 +10,12 @@
   "build": {
     "asarUnpack": "music/**.*",
     "appId": "ru.chermenin.solitude",
+    "productName": "Solitude",
     "win": {
       "target": [
-        "nsis"
+        "nsis",
+        "msi",
+        "zip"
       ],
       "icon": "build/icon.ico"
     },
@@ -44,7 +47,7 @@
   },
   "homepage": "https://github.com/chermenin/solitude#readme",
   "dependencies": {
-    "player": "^0.6.1"
+    "soundmanager2": "^2.97.20170602"
   },
   "devDependencies": {
     "electron": "^2.0.7",

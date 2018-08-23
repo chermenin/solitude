@@ -77,7 +77,53 @@
 			doubleTime: true
 		},
 
+		startMusic: function() {
+			const fs = require('fs');
+
+			var audio = [];
+
+			var musicDir = __dirname + ((process.mainModule.filename.indexOf('app.asar') !== -1) ? '.unpacked' : '') + '/music/';
+			fs.readdir(musicDir, (err, files) => {
+				audio.playlist = files.filter(file => file.endsWith('.mp3')).map(file => musicDir + file);
+			});
+
+			function playAudio(playlistId){
+
+				// Default playlistId to 0 if not supplied 
+				playlistId = playlistId ? playlistId : 0;
+				
+				// If SoundManager object exists, get rid of it...
+				if (audio.nowPlaying){
+					audio.nowPlaying.destruct();
+					// ...and reset array key if end reached
+					if(playlistId == audio.playlist.length){
+						playlistId = 0;
+					}
+				}
+				// Standard Sound Manager play sound function...
+				soundManager.onready(function() {
+					audio.nowPlaying = soundManager.createSound({
+						id: 'sk4Audio',
+						url: audio.playlist[playlistId],
+						autoLoad: true,
+						autoPlay: true,
+						volume: 50,
+						// ...with a recursive callback when play completes
+						onfinish: function(){
+							playlistId ++;
+							playAudio(playlistId);
+						}
+					})
+				});
+			}
+			
+			// Start
+			playAudio(0);
+		},
+
 		init: function(options) {
+			Engine.startMusic();
+
 			this.options = $.extend(
 				this.options,
 				options

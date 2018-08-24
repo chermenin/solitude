@@ -49,6 +49,9 @@ var Space = {
 	options: {}, // Nothing for now
 	
 	onArrival: function() {
+		$('div#stores').animate({opacity: 0}, 300);
+		$('div#notifications').animate({opacity: 0}, 300);
+		
 		Space.done = false;
 		Engine.keyLock = false;
 		Space.hull = Ship.getMaxHull();
@@ -205,19 +208,8 @@ var Space = {
 	},
 	
 	startAscent: function() {
-		var body_color;
-		var to_color;
-		if (Engine.isLightsOff()) {
-			body_color = '#272823';
-			to_color = '#EEEEEE';
-		}
-		else {
-			body_color = '#FFFFFF';
-			to_color = '#000000';
-		}
-
-		$('body').addClass('noMask').css({backgroundColor: body_color}).animate({
-			backgroundColor: to_color
+		$('body').addClass('noMask').css({backgroundColor: '#272823'}).animate({
+			backgroundColor: '#EEEEEE'
 		}, {
 			duration: Space.FTB_SPEED, 
 			easing: 'linear',
@@ -238,10 +230,7 @@ var Space = {
 		}, 1000);
 		
 		Space._panelTimeout = Engine.setTimeout(function() {
-			if (Engine.isLightsOff())
-				$('#spacePanel, .menu, select.menuBtn').animate({color: '#272823'}, 500, 'linear');
-			else
-				$('#spacePanel, .menu, select.menuBtn').animate({color: 'white'}, 500, 'linear');
+			$('#spacePanel, .menu, select.menuBtn').animate({color: '#272823'}, 500, 'linear');
 		}, Space.FTB_SPEED / 2, true);
 		
 		Space.createAsteroid();
@@ -302,14 +291,10 @@ var Space = {
 		clearInterval(Space._timer);
 		clearInterval(Space._shipTimer);
 		clearTimeout(Space._panelTimeout);
-		var body_color;
-		if (Engine.isLightsOff())
-			body_color = '#272823';
-		else
-			body_color = '#FFFFFF';
+
 		// Craaaaash!
 		$('body').removeClass('noMask').stop().animate({
-			backgroundColor: body_color
+			backgroundColor: '#272823'
 		}, {
 			duration: 300, 
 			progress: function() {
@@ -371,14 +356,9 @@ var Space = {
 					$('#header').empty();
 					Engine.setTimeout(function() {
 						$('body').stop();
-						var container_color;
-						if (Engine.isLightsOff())
-							container_color = '#EEE';
-						else
-							container_color = '#000';
 						$('#starsContainer').animate({
 							opacity: 0,
-							'background-color': container_color
+							'background-color': '#aaa'
 						}, {
 							duration: 2000, 
 							progress: function() {
@@ -388,55 +368,68 @@ var Space = {
 								$('#notifyGradient').attr('style', 'background-color:'+cur+';background:-webkit-' + s + ';background:' + s);
 							},
 							complete: function() {
-								Engine.GAME_OVER = true;
-								Score.save();
-								Prestige.save();
-						
-								$('<center>')
-									.addClass('centerCont')
-									.appendTo('body');
-								$('<span>')
-									.addClass('endGame')
-									.text(_('score for this game: {0}', Score.calculateScore()))
-									.appendTo('.centerCont')
-									.animate({opacity:1},1500);
-								$('<br />')
-									.appendTo('.centerCont');
-								$('<span>')
-									.addClass('endGame')
-									.text(_('total score: {0}', Prestige.get().score))
-									.appendTo('.centerCont')
-									.animate({opacity:1},1500);
-								$('<br />')
-									.appendTo('.centerCont');
-								$('<br />')
-									.appendTo('.centerCont');
-								$('#starsContainer').remove();
-								$('#content, #notifications').remove();
-								$('<span>')
-									.addClass('endGame endGameOption')
-									.text(_('restart.'))
-									.click(Engine.confirmDelete)
-									.appendTo('.centerCont')
-									.animate({opacity:1},1500);
-								$('<br />')
-									.appendTo('.centerCont');
-								$('<br />')
-										.appendTo('.centerCont');
-								$('<span>')
-										.addClass('endGame')
-										.text(_('Desktop game by Alex Chermenin'))
-										.appendTo('.centerCont')
-										.animate({opacity:1}, 1500);
-								$('<br />')
-										.appendTo('.centerCont');
-								$('<span>')
-										.addClass('endGame')
-										.text(_('Music by Ryan Andersen'))
-										.appendTo('.centerCont')
-										.animate({opacity:1}, 1500);
-								Engine.options = {};
-								Engine.deleteSave(true);
+								$('body').removeClass('noMask').stop().animate({
+									backgroundColor: '#272823'
+								}, {
+									duration: 300, 
+									progress: function() {
+										var cur = $('body').css('background-color');
+										var s = 'linear-gradient(rgba' + cur.substring(3, cur.length - 1) + ', 0) 0%, rgba' + 
+											cur.substring(3, cur.length - 1) + ', 1) 100%)';
+										$('#notifyGradient').attr('style', 'background-color:'+cur+';background:-webkit-' + s + ';background:' + s);
+									},
+									complete: function() {
+										Engine.GAME_OVER = true;
+										Score.save();
+										Prestige.save();
+								
+										$('<center>')
+											.addClass('centerCont')
+											.appendTo('body');
+										$('<span>')
+											.addClass('endGame')
+											.text(_('score for this game: {0}', Score.calculateScore()))
+											.appendTo('.centerCont')
+											.animate({opacity:1},1500);
+										$('<br />')
+											.appendTo('.centerCont');
+										$('<span>')
+											.addClass('endGame')
+											.text(_('total score: {0}', Prestige.get().score))
+											.appendTo('.centerCont')
+											.animate({opacity:1},1500);
+										$('<br />')
+											.appendTo('.centerCont');
+										$('<br />')
+											.appendTo('.centerCont');
+										$('#starsContainer').remove();
+										$('#content, #notifications').remove();
+										$('<span>')
+											.addClass('endGame endGameOption')
+											.text(_('restart.'))
+											.click(Engine.confirmDelete)
+											.appendTo('.centerCont')
+											.animate({opacity:1},1500);
+										$('<br />')
+											.appendTo('.centerCont');
+										$('<br />')
+												.appendTo('.centerCont');
+										$('<span>')
+												.addClass('endGame')
+												.text(_('Desktop game by Alex Chermenin'))
+												.appendTo('.centerCont')
+												.animate({opacity:1}, 1500);
+										$('<br />')
+												.appendTo('.centerCont');
+										$('<span>')
+												.addClass('endGame')
+												.text(_('Music by Ryan Andersen'))
+												.appendTo('.centerCont')
+												.animate({opacity:1}, 1500);
+										Engine.options = {};
+										Engine.deleteSave(true);
+									}
+								});
 							}
 						});
 					}, 2000);

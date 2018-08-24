@@ -299,6 +299,7 @@ var Path = {
 	onArrival: function(transition_diff) {
 		Path.updateOutfitting();
 		Path.updatePerks(true);
+		$('div#notifications').animate({opacity: 1}, 300);
 		$('div#stores').animate({opacity: 1}, 300);
 		$('div#weapons').animate({opacity: 1}, 300);
 		$('div#perks').css('top', ($('div#weapons').outerHeight() + 15) + 'px')

@@ -571,6 +571,7 @@ var Outside = {
 	},
 	
 	onArrival: function(transition_diff) {
+		$('div#notifications').animate({opacity: 1}, 300);
 		Outside.setTitle();
 		if(!$SM.get('game.outside.seenForest')) {
 			Notifications.notify(Outside, _("the sky is grey and the wind blows relentlessly"));

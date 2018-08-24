@@ -90,6 +90,7 @@ var Ship = {
 			Notifications.notify(Ship, _('somewhere above the debris cloud, the wanderer fleet hovers. been on this rock too long.'));
 			$SM.set('game.spaceShip.seenShip', true);
 		}
+		$('div#notifications').animate({opacity: 1}, 300);
 	},
 	
 	reinforceHull: function() {

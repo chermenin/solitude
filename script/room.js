@@ -549,6 +549,7 @@ var Room = {
 	options: {}, // Nothing for now
 	
 	onArrival: function(transition_diff) {
+		$('div#notifications').animate({opacity: 1}, 300);
 		Room.setTitle();
 		if(Room.changed) {
 			Notifications.notify(Room, _("the fire is {0}", Room.FireEnum.fromInt($SM.get('game.fire.value')).text));

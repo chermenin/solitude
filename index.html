@@ -65,7 +65,7 @@
 		const electron = require('electron');
 		const webFrame = electron.webFrame;
 
-		var screenElectron = electron.screen;
+		var screenElectron = electron.remote.screen;
 		var mainScreen = screenElectron.getPrimaryDisplay();
 		var dimensions = mainScreen.size;
 

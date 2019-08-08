@@ -2,13 +2,16 @@ const {app, BrowserWindow} = require('electron');
 
 function createWindow () {
     let mainWindow = new BrowserWindow({
-        fullscreen:true,
+        fullscreen: true,
         backgroundColor: '#000000',
-        show: false
+        show: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
     mainWindow.setMenu(null);
     mainWindow.loadFile('index.html');
-    mainWindow.openDevTools();
+    // mainWindow.openDevTools();
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
     });

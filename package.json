@@ -59,7 +59,7 @@
     "soundmanager2": "^2.97.20170602"
   },
   "devDependencies": {
-    "electron": "^28.3.2",
+    "electron": "^35.7.5",
     "electron-builder": "^24.13.3",
     "dot-prop": ">=4.2.1"
   }
